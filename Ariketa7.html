@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3. Erronka: Biltegi Bateratzea</title>
+</head>
+<body style="background-color: #f5f6fa; padding: 20px;">
+
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: auto; border: 1px solid #e1e4e8; padding: 20px; border-radius: 8px; background-color: #fdfdfd; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        
+        <span style="background-color: #9b59b6; color: white; padding: 3px 8px; border-radius: 3px; font-size: 0.8em; font-weight: bold;">3. ERRONKA</span>
+        <h2 style="margin-top: 5px; color: #2c3e50;">Biltegi Bateratzea (Spread Operadorea)</h2>
+        <p>Botoia sakatzean, bi denden array-ak batuko dira (Spread bidez) eta %10eko deskontua aplikatuko zaie jatorrizko datuak suntsitu gabe.</p>
+
+        <pre style="background-color: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: 'Courier New', Courier, monospace; font-size: 0.9em;">
+<span style="color: #f92672;">const</span> dendaA = [{ izena: <span style="color: #e6db74;">"Sagua"</span>, prezioa: <span style="color: #ae81ff;">20</span> }, { izena: <span style="color: #e6db74;">"Teklatua"</span>, prezioa: <span style="color: #ae81ff;">50</span> }];
+<span style="color: #f92672;">const</span> dendaB = [{ izena: <span style="color: #e6db74;">"Pantaila"</span>, prezioa: <span style="color: #ae81ff;">150</span> }];</pre>
+
+        <button onclick="probatuErronka3()" style="background-color: #9b59b6; color: white; border: none; padding: 10px 20px; font-size: 1em; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px;">🔄 Bateratu eta Aplikatu Deskontua</button>
+        
+        <div id="emaitza" style="margin-top: 20px; padding: 15px; background-color: #edf2f7; border-left: 4px solid #9b59b6; border-radius: 4px; display: none;">
+            <strong style="color: #2c3e50;">Emaitza (JSON formatuan ikusia):</strong>
+            <p style="font-weight: bold; margin-bottom: 2px;">Denda Berria (%10 deskontuarekin):</p>
+            <pre id="testuaBerria" style="font-family: monospace; background: white; padding: 10px; border-radius: 4px; border: 1px solid #ddd;"></pre>
+            
+            <p style="font-weight: bold; margin-bottom: 2px; margin-top: 10px;">Jatorrizko Denda A (Seguru mantendu da, ez da aldatu!):</p>
+            <pre id="testuaJatorrizkoa" style="font-family: monospace; background: white; padding: 10px; border-radius: 4px; border: 1px solid #ddd;"></pre>
+        </div>
+    </div>
+
+    <script>
+        function probatuErronka3() {
+            const dendaA = [{ izena: "Sagua", prezioa: 20 }, { izena: "Teklatua", prezioa: 50 }];
+            const dendaB = [{ izena: "Pantaila", prezioa: 150 }];
+
+            // 1. SOLUZIOA: Bi array-ak batu spread bidez
+            const dendaOsoa = [...dendaA, ...dendaB];
+            
+            // 2. SOLUZIOA: Kopia eta eguneratzea objektuetan spread bidez
+            const dendaDeskontuarekin = [];
+            for (const prod of dendaOsoa) {
+                // Objektu berri bat sortzen dugu jatorrizkoaren propietateekin, baina prezioa aldatuta
+                const kopiaBerria = { 
+                    ...prod, 
+                    prezioa: prod.prezioa * 0.9 
+                };
+                dendaDeskontuarekin.push(kopiaBerria);
+            }
+
+            // Kontsolan inprimatu ikusteko
+            console.log("Bateratua eta Deskontuarekin:", dendaDeskontuarekin);
+            console.log("Jatorrizko Denda A (Seguru):", dendaA);
+
+            // Pantailan testu gisa erakutsi JSON.stringify erabiliz egitura politago ikusteko
+            document.getElementById("testuaBerria").innerText = JSON.stringify(dendaDeskontuarekin, null, 2);
+            document.getElementById("testuaJatorrizkoa").innerText = JSON.stringify(dendaA, null, 2);
+            document.getElementById("emaitza").style.display = "block";
+        }
+    </script>
+</body>
+</html>
